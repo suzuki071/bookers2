@@ -1,0 +1,60 @@
+<div class="container px-5 px-sm-0">
+
+  <div id="error_explanation">
+    <% if @book.errors.any? %>
+      <h3>
+        <% if @book.errors.count == 1 %>
+          <%= @book.errors.count %> error prohibited this obj from being saved:
+        <% else %>
+          <%= @book.errors.count %> errors prohibited this obj from being saved:
+        <% end %>
+      </h3>
+      <ul>
+        <% @book.errors.full_messages.each do |message| %>
+          <li>
+            <%= message %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+    <% end %>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <%= render 'books/list', book:@booknew, user:current_user %>
+    </div>
+
+    <div class="col-md-8 offset-md-1">
+      <h2>Books</h2>
+      <table class="table table-hover table-inverse">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Opinion</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @books.each do |books| %>
+            <tr>
+              <td>
+                <%= link_to user_path(books.user_id) do %>
+                  <%= attachment_image_tag books.user, :profile_image, format: 'jpeg', fallback: "no_image.jpg", size:"40x40" %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to books.title, book_path(books.id) %>
+              </td>
+              <td>
+                <%= books.body %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
